@@ -1,0 +1,17 @@
+from docx import Document
+import re
+
+def process_number(match):
+    number = int(match.group())
+    return str(number - 2) if number > 118 else match.group()
+
+def process_document(doc_path):
+    doc = Document(doc_path)
+    for para in doc.paragraphs:
+        para.text = re.sub(r'\b\d+\b', lambda match: process_number(match), para.text)
+
+    doc.save(r'C:\Users\Administrator\Desktop\updated_document.docx')
+
+# 替换以下路径为您的Word文档路径
+doc_path = r'C:\Users\Administrator\Desktop\2023_FM_HDIS.docx'
+process_document(doc_path)
